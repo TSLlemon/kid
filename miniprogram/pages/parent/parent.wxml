@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="card">
+    <view class="title">学习概况</view>
+    <view>连续打卡 {{s.streak}} 天 · 累计打卡 {{s.checkin_days}} 天</view>
+    <view>AI讲题 {{s.explain_count}} 次 · 未掌握错题 {{s.open_mistakes}} 道</view>
+  </view>
+  <view class="card">
+    <view class="title">各科练习正确率</view>
+    <view wx:for="{{s.by_subject}}" wx:key="subject">{{item.subject}}：做了 {{item.total}} 题，正确率 {{item.accuracy}}%</view>
+    <view wx:if="{{!s.by_subject.length}}" class="muted">还没有练习记录</view>
+  </view>
+  <view class="card">
+    <view class="title">近 7 天</view>
+    <view wx:for="{{s.week}}" wx:key="day">{{item.day}}：{{item.n}} 次学习</view>
+  </view>
+  <view class="card">
+    <view class="title">最近学习记录</view>
+    <view class="step" wx:for="{{records}}" wx:key="id">
+      <view class="muted">{{item.created_at}} · {{item.subject}} · {{item.kind=='explain'?'讲题':'练习'}} <text wx:if="{{item.correct!==null}}" class="{{item.correct?'ok':'bad'}}">{{item.correct?'对':'错'}}</text></view>
+      <view>{{item.question}}</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,19 @@
+<view class="container">
+  <view class="card">
+    <view class="muted">{{grade}}年级 · {{subject}}</view>
+    <input placeholder="想练什么？如：两位数加法、古诗（可不填）" value="{{topic}}" bindinput="onTopic"/>
+    <button class="btn" bindtap="gen" loading="{{loading}}">出 5 道题</button>
+  </view>
+  <view class="card" wx:for="{{qs}}" wx:key="index" wx:for-index="i">
+    <view>{{i+1}}. {{item.question}}</view>
+    <view wx:if="{{item.options.length}}" class="chips">
+      <view wx:for="{{item.options}}" wx:for-item="op" wx:key="*this" class="chip {{item.my==op[0]?'on':''}}" data-i="{{i}}" data-v="{{op[0]}}" bindtap="pick">{{op}}</view>
+    </view>
+    <input wx:else placeholder="写答案" data-i="{{i}}" bindinput="fill" value="{{item.my}}"/>
+    <button class="btn-light" size="mini" data-i="{{i}}" bindtap="check" loading="{{item.submitting}}" disabled="{{item.submitting}}" wx:if="{{!item.result || (!item.result.correct && item.attempt < 3)}}">{{item.attempt ? '再试一次' : '提交'}}</button>
+    <view wx:if="{{item.result}}" class="{{item.result.correct?'ok':'bad'}}">{{item.result.correct?'✅':'❌'}} {{item.result.feedback}}</view>
+    <view wx:if="{{item.result && !item.result.correct && item.attempt < 3}}" class="muted">{{item.result.hint}}（已尝试 {{item.attempt}} / 3 次）</view>
+    <view wx:if="{{item.result && !item.result.correct && item.attempt >= 3}}" class="muted">正确答案：{{item.result.correct_answer}}（已记入错题本）</view>
+    <view wx:if="{{item.result && !item.result.correct && item.attempt >= 3 && item.result.explanation}}" class="step">{{item.result.explanation}}</view>
+  </view>
+</view>

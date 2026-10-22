@@ -1,0 +1,31 @@
+services:
+  app:
+    build: .
+    env_file: .env
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      # 证书放在 ./certs 下（certbot 生成后复制或软链过来）
+      - ./certs/fullchain.pem:/etc/nginx/certs/fullchain.pem:ro
+      - ./certs/privkey.pem:/etc/nginx/certs/privkey.pem:ro
+      - ./certbot-www:/var/www/certbot
+    depends_on: [app]
+    restart: unless-stopped
+  # 题库爬虫：按需运行，例如
+  #   docker compose run --rm crawler scrapy crawl poetry
+  #   docker compose run --rm crawler scrapy crawl generic -a source=generic_example
+  crawler:
+    build: ./crawler
+    profiles: ["tools"]
+    environment:
+      - DB_PATH=/data/tutor.db
+    volumes:
+      - ./data:/data
+      - ./crawler/sources.yaml:/crawler/sources.yaml:ro

@@ -1,0 +1,9 @@
+{
+  "description": "小学学习辅导（家庭版）。⚠️ 请把 appid 的 touristappid 替换成你自己的小程序 AppID",
+  "appid": "touristappid",
+  "projectname": "kid-tutor",
+  "compileType": "miniprogram",
+  "libVersion": "3.5.0",
+  "setting": { "urlCheck": false, "es6": true, "enhance": true, "postcss": true, "minified": true },
+  "condition": {}
+}

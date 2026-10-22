@@ -1,0 +1,19 @@
+<view class="container">
+  <view class="card">
+    <view class="title">我是几年级？</view>
+    <view class="chips"><view wx:for="{{grades}}" wx:key="*this" class="chip {{grade==item?'on':''}}" data-g="{{item}}" bindtap="pickGrade">{{item}}年级</view></view>
+    <view class="title" style="margin-top:20rpx">学什么？</view>
+    <view class="chips"><view wx:for="{{subjects}}" wx:key="*this" class="chip {{subject==item?'on':''}}" data-s="{{item}}" bindtap="pickSubject">{{item}}</view></view>
+  </view>
+  <view class="card">
+    <view class="title">今日打卡 🌟</view>
+    <view wx:if="{{checked}}" class="ok">今天已经打卡啦！连续 {{streak}} 天</view>
+    <view wx:else class="muted">连续 {{streak}} 天，今天学完记得打卡哦</view>
+    <button class="btn" disabled="{{checked}}" bindtap="checkin">{{checked?'已打卡':'打卡'}}</button>
+  </view>
+  <view class="card">
+    <button class="btn-light" bindtap="go" data-url="/pages/explain/explain" data-tab="1">📷 拍照问题目</button>
+    <button class="btn-light" bindtap="go" data-url="/pages/practice/practice" data-tab="1">✏️ 做练习</button>
+    <button class="btn-light" bindtap="go" data-url="/pages/cards/cards">📖 背单词 / 古诗</button>
+  </view>
+</view>

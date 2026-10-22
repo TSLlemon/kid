@@ -1,0 +1,6 @@
+sources:
+  g: {start_urls: ["file:///x"], subject: 数学, grade: 2, item: "div.question",
+      fields: {stem: "p.stem::text", options: "ul.options li::text", answer: "span.answer::text", explanation: "xpath:.//div[@class='explain']//text()"},
+      next_page: "a.next::attr(href)", max_pages: 3}
+  p: {start_urls: ["file:///x"], grade: 2, max_chars: 60}
+  w: {start_urls: ["file:///x"]}

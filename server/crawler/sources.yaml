@@ -1,0 +1,39 @@
+# 数据源配置
+#
+# 资源三层策略（按优先级）：
+#   1. 程序生成 —— 数学口算/计算题由 server/app/mathgen.py 按年级直接生成，无限题量，不用爬；
+#   2. 开源数据集 —— 古诗（chinese-poetry，MIT）、英语词表（server/scripts/words_seed.csv + import_words.py），一次性导入；
+#   3. 爬虫（本文件）—— 只抓上面两层覆盖不了的内容，如知识点讲解、例题精讲。
+#      新增来源：复制一段，改名字、网址和选择器，然后
+#        docker compose run --rm crawler scrapy crawl generic -a source=<名字>
+# ⚠️ 只抓取公有领域/开放许可/明确允许的内容，仅限家庭个人使用。
+#    商业题库网站（如各类付费题库、教辅网站）的题目受版权保护，且多禁止爬取，请勿抓取。
+sources:
+  poetry_tang300:            # chinese-poetry（MIT），唐诗三百首；抓取后自动生成「补全诗句」填空题
+    start_urls:
+      - https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/全唐诗/唐诗三百首.json
+    grade: 3
+    max_chars: 60
+    titles: []               # 留空=全部短诗；也可只列课本里的诗名
+
+  words_remote:              # 英语词表：远端开放词表（CSV 列 word,meaning,grade）。
+                            # 自带词表已用 server/scripts/import_words.py 导入，无需重复抓；换更大的词表时再用这个。
+    start_urls:
+      - https://example.com/your-open-wordlist.csv
+    grade: 3
+
+  generic_example:           # 通用模板：针对一个"允许抓取"的练习题网页
+    start_urls:
+      - https://example.org/open-exercises/grade2-math.html
+    allowed_domains: [example.org]
+    subject: 数学
+    grade: 2
+    knowledge_point: 加减法
+    item: "div.question"                 # 每道题的容器（CSS，或以 xpath: 开头写 XPath）
+    fields:
+      stem: "p.stem::text"
+      options: "ul.options li::text"     # 没有选项就删掉
+      answer: "span.answer::text"
+      explanation: "xpath:.//div[@class='explain']//text()"
+    next_page: "a.next::attr(href)"
+    max_pages: 3

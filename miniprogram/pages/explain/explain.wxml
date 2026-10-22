@@ -1,0 +1,26 @@
+<view class="container">
+  <view class="card">
+    <view class="muted">{{grade}}年级 · {{subject}}（在首页切换）</view>
+    <textarea placeholder="把题目打在这里，或者拍照～" value="{{question}}" bindinput="onInput" maxlength="2000"/>
+    <image wx:if="{{img}}" src="{{img}}" mode="widthFix" style="width:100%;margin-top:16rpx"/>
+    <button class="btn-light" bindtap="chooseImg">📷 拍照 / 选图片</button>
+    <button class="btn" bindtap="ask" loading="{{loading}}">请AI老师讲一讲</button>
+  </view>
+  <view class="card" wx:if="{{res}}">
+    <view wx:if="{{res.question}}"><text class="muted">题目：</text>{{res.question}}</view>
+    <view wx:if="{{res.knowledge}}" class="muted">知识点：{{res.knowledge}}</view>
+    <view class="title" style="margin-top:16rpx">💡 小提示</view>
+    <view>{{res.hint || res.raw}}</view>
+    <view class="muted" style="margin-top:12rpx">先自己想一想，想好了再看讲解哦～</view>
+    <button wx:if="{{!showAll && res.steps}}" class="btn-light" bindtap="reveal">我想好了，看讲解</button>
+    <view wx:if="{{showAll}}">
+      <view class="title" style="margin-top:16rpx">📝 一步一步来</view>
+      <view class="step" wx:for="{{res.steps}}" wx:key="index">{{item}}</view>
+      <view class="title ok" style="margin-top:16rpx">答案：{{res.answer}}</view>
+      <view>{{res.encourage}}</view>
+      <view wx:if="{{res.similar}}" style="margin-top:16rpx"><text class="muted">试试这道：</text>{{res.similar}}</view>
+      <button class="btn-light" bindtap="saveMistake">加入错题本</button>
+      <button class="btn-light" bindtap="practiceSimilar">练几道类似的</button>
+    </view>
+  </view>
+</view>

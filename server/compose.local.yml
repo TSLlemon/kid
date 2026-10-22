@@ -1,0 +1,10 @@
+# Run explicitly from server/: docker compose -f compose.local.yml up --build
+# A new checkout uses its own ./data directory.
+services:
+  app:
+    build: .
+    env_file: .env
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./data:/data

@@ -1,0 +1,16 @@
+{
+  "pages": ["pages/index/index", "pages/explain/explain", "pages/practice/practice", "pages/mistakes/mistakes", "pages/cards/cards", "pages/parent/parent"],
+  "window": { "navigationBarTitleText": "小学学习助手", "navigationBarBackgroundColor": "#4CAF50", "navigationBarTextStyle": "white", "backgroundColor": "#F5F7F2" },
+  "tabBar": {
+    "color": "#888", "selectedColor": "#4CAF50", "backgroundColor": "#fff",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/explain/explain", "text": "AI讲题" },
+      { "pagePath": "pages/practice/practice", "text": "练习" },
+      { "pagePath": "pages/mistakes/mistakes", "text": "错题本" },
+      { "pagePath": "pages/parent/parent", "text": "家长" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

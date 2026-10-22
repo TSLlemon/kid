@@ -1,0 +1,2 @@
+# Speech service protocol update; overrides the base dependency layer.
+edge-tts==7.3.1

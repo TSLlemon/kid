@@ -1,0 +1,17 @@
+<view class="container">
+  <view class="chips">
+    <view class="chip {{kind=='words'?'on':''}}" data-k="words" bindtap="setKind">英语单词</view>
+    <view class="chip {{kind=='poems'?'on':''}}" data-k="poems" bindtap="setKind">古诗</view>
+    <view class="chip {{all?'on':''}}" bindtap="toggleAll">{{all?'全部年级':'只看'+grade+'年级及以下'}}</view>
+  </view>
+  <view wx:if="{{cards.length}}" class="card" style="min-height:400rpx;text-align:center" bindtap="flip">
+    <view class="muted">{{idx+1}} / {{cards.length}} · 点卡片翻面</view>
+    <view style="font-size:48rpx;margin-top:80rpx;white-space:pre-wrap">{{back ? cards[idx].back : cards[idx].front}}</view>
+  </view>
+  <view class="chips" style="justify-content:space-around">
+    <button size="mini" bindtap="prev">上一张</button>
+    <button size="mini" bindtap="speak" wx:if="{{kind=='words'}}">记住了 ✔</button>
+    <button size="mini" bindtap="next">下一张</button>
+  </view>
+  <view class="muted" style="margin-top:20rpx">已记住 {{known}} 张（本机记录）</view>
+</view>

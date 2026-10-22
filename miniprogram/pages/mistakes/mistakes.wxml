@@ -1,0 +1,22 @@
+<view class="container">
+  <view class="chips">
+    <view wx:for="{{filters}}" wx:key="*this" class="chip {{subject==item?'on':''}}" data-s="{{item}}" bindtap="filter">{{item||'全部'}}</view>
+    <view class="chip {{mastered?'on':''}}" bindtap="toggleMastered">{{mastered?'已掌握':'未掌握'}}</view>
+  </view>
+  <view wx:if="{{!list.length}}" class="muted" style="padding:40rpx;text-align:center">这里空空的，真棒！</view>
+  <view class="card" wx:for="{{list}}" wx:key="id">
+    <view class="muted">{{item.subject}} · {{item.grade}}年级 · {{item.created_at}}</view>
+    <view>{{item.question}}</view>
+    <view wx:if="{{item.my_answer}}" class="bad">我的答案：{{item.my_answer}}</view>
+    <view wx:if="{{open[item.id]}}">
+      <view class="ok">正确答案：{{item.correct_answer}}</view>
+      <view class="muted">{{item.explanation}}</view>
+    </view>
+    <view class="chips">
+      <view class="chip" data-id="{{item.id}}" bindtap="toggle">{{open[item.id]?'收起':'看答案'}}</view>
+      <view class="chip" data-q="{{item.question}}" bindtap="redo">再练类似题</view>
+      <view class="chip" data-id="{{item.id}}" bindtap="master">{{mastered?'标为未掌握':'我会了'}}</view>
+      <view class="chip" data-id="{{item.id}}" bindtap="del">删除</view>
+    </view>
+  </view>
+</view>
